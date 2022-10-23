@@ -22,6 +22,7 @@
                 <a href="{{ route('posts.edit', $post) }}"
                     class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
             @endcan
+
             @can('delete', $post)
                 <form action="{{ route('posts.destroy', $post) }}" method="post">
                     @csrf
@@ -47,6 +48,22 @@
                     <span class="font-bold mr-3">{{ $comment->user->name }}</span>
                     <span class="text-sm">{{ $comment->created_at }}</span>
                     <p>{!! nl2br(e($comment->body)) !!}</p>
+
+                    <div class="flex justify-end text-center">
+                        @can('update', $comment)
+                            <a href="{{ route('posts.comments.edit', [$post, $comment]) }}"
+                                class="text-sm bg-green-400 hover:bg-green-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-20 mr-2">編集</a>
+                        @endcan
+                        @can('delete', $comment)
+                            <form action="{{ route('posts.comments.destroy', [$post, $comment]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="削除" onclick="if(!confirm('削除しますか？')){return false};"
+                                    class="text-sm bg-red-400 hover:bg-red-600 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline w-20">
+                            </form>
+                        @endcan
+                    </div>
+
                 </div>
                 <hr>
             @endforeach
