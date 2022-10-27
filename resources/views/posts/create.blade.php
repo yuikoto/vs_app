@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container lg:w-1/2 md:w-4/5 w-11/12 mx-auto mt-8 px-8 bg-white shadow-md">
-        <h2 class="text-center text-lg font-bold pt-6 tracking-widest">ブログ登録</h2>
+        <h2 class="text-center text-lg font-bold pt-6 tracking-widest">今日の体調を記録しましょう！</h2>
 
         <x-validation-errors :errors="$errors" />
 
@@ -9,7 +9,7 @@
             @csrf
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm mb-2" for="title">
-                    タイトル
+                    今日の体調は・・・
                 </label>
                 <input type="text" name="title"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"
@@ -17,7 +17,6 @@
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 text-sm mb-2" for="body">
-                    本文
                 </label>
                 <textarea name="body" rows="10"
                     class="rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 w-full py-2 px-3"

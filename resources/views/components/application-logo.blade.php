@@ -1,1 +1,1 @@
-<h1 class="text-lg">Hare Blog</h1>
+<h1 class="text-lg">バイタルサイン記録アプリ</h1>
