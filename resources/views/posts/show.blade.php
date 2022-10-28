@@ -63,11 +63,9 @@
                             </form>
                         @endcan
                     </div>
-
                 </div>
                 <hr>
             @endforeach
         </section>
-
     </div>
 </x-app-layout>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Models\Post;
+use App\Models\vs_table;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,36 +41,39 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        $post = new Post($request->all());
+        $post = new Vs_table($request->all());
         $post->user_id = $request->user()->id;
+
 
         $file = $request->file('image');
         $post->image = self::createFileName($file);
 
-        // トランザクション開始
-        DB::beginTransaction();
-        try {
-            // 登録
-            $post->save();
 
-            // 画像アップロード
-            if (!Storage::putFileAs('images/posts', $file, $post->image)) {
-                // 例外を投げてロールバックさせる
-                throw new \Exception('画像ファイルの保存に失敗しました。');
-            }
+        //     // トランザクション開始
+        //     DB::beginTransaction();
+        //     try {
+        //         // 登録
+        //         $post->save();
 
-            // トランザクション終了(成功)
-            DB::commit();
+        //         // 画像アップロード
+        //         if (!Storage::putFileAs('images/posts', $file, $post->image)) {
+        //             // 例外を投げてロールバックさせる
+        //             throw new \Exception('画像ファイルの保存に失敗しました。');
+        //         }
 
-            return redirect()
-                ->route('posts.show', $post)
-                ->with('notice', '記事を登録しました');
-        } catch (\Exception $e) {
-            // トランザクション終了(失敗)
-            DB::rollback();
-            return back()->withInput()->withErrors($e->getMessage());
-        }
+        //         // トランザクション終了(成功)
+        //         DB::commit();
+
+        //         return redirect()
+        //             ->route('posts.show', $post)
+        //             ->with('notice', '記事を登録しました');
+        //     } catch (\Exception $e) {
+        //         // トランザクション終了(失敗)
+        //         DB::rollback();
+        //         return back()->withInput()->withErrors($e->getMessage());
+        //     }
     }
+
 
     /**
      * Display the specified resource.
