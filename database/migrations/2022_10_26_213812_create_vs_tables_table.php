@@ -17,11 +17,11 @@ class CreateVsTablesTable extends Migration
             $table->id();
             $table->date('vaitel_date');
             $table->time('vaitel_time');
-            $table->float('temperature');
-            $table->integer('bp_up');
-            $table->integer('bp_under');
-            $table->integer('pulse');
-            $table->string('vaitel_comment');
+            $table->float('temperature')->nullable();
+            $table->integer('bp_up')->nullable();
+            $table->integer('bp_under')->nullable();
+            $table->integer('pulse')->nullable();
+            $table->string('vaitel_comment')->nullable();
             $table->timestamps();
         });
     }

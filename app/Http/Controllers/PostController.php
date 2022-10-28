@@ -42,36 +42,30 @@ class PostController extends Controller
     public function store(StorePostRequest $request)
     {
         $post = new Vs_table($request->all());
-        $post->user_id = $request->user()->id;
+        // $post->user_id = $request->user()->id;
 
 
-        $file = $request->file('image');
-        $post->image = self::createFileName($file);
+        // $file = $request->file('image');
+        // $post->image = self::createFileName($file);
 
 
-        //     // トランザクション開始
-        //     DB::beginTransaction();
-        //     try {
-        //         // 登録
-        //         $post->save();
+        // トランザクション開始
+        DB::beginTransaction();
+        try {
+            // 登録
+            $post->save();
 
-        //         // 画像アップロード
-        //         if (!Storage::putFileAs('images/posts', $file, $post->image)) {
-        //             // 例外を投げてロールバックさせる
-        //             throw new \Exception('画像ファイルの保存に失敗しました。');
-        //         }
+            // トランザクション終了(成功)
+            DB::commit();
 
-        //         // トランザクション終了(成功)
-        //         DB::commit();
-
-        //         return redirect()
-        //             ->route('posts.show', $post)
-        //             ->with('notice', '記事を登録しました');
-        //     } catch (\Exception $e) {
-        //         // トランザクション終了(失敗)
-        //         DB::rollback();
-        //         return back()->withInput()->withErrors($e->getMessage());
-        //     }
+            return redirect()
+                ->route('posts.index', $post)
+                ->with('notice', '記事を登録しました');
+        } catch (\Exception $e) {
+            // トランザクション終了(失敗)
+            DB::rollback();
+            return back()->withInput()->withErrors($e->getMessage());
+        }
     }
 
 
