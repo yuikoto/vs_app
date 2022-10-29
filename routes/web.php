@@ -33,7 +33,11 @@ Route::resource('posts.comments', CommentController::class)
     ->only(['create', 'store', 'edit', 'update', 'destroy'])
     ->middleware('auth');
 
-Route::resource('calendars', App\Http\Controllers\CalendarController::class);
+Route::get('/calendar', function () {
+    return view('calendar');
+});
+
+// Route::resource('calendars', App\Http\Controllers\CalendarController::class);
 
 require __DIR__ . '/auth.php';
 
